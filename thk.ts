@@ -1,7 +1,7 @@
 /**
  * Blocks for driving the Kitronik I2C 16-Servo Driver Board
  */
-//% weight=100 color=#de3b09 icon="\uf085" block="THK"
+//% weight=150 color=#de3b09 icon="\uf085" block="THK"
 
 namespace THK {
 
@@ -18,25 +18,26 @@ namespace THK {
     let ServoZeroOffset = 0x66
 
     let initalised = false //a flag to allow us to initialise without explicitly calling the secret incantation
+    let keisuu_setting = 80
 
     //nice big list of servos for the block to use. These represent register offsets in the PCA9865
     export enum Servos {
-        Servo1 = 0x08,
-        Servo2 = 0x0C,
-        Servo3 = 0x10,
-        Servo4 = 0x14,
-        Servo5 = 0x18,
-        Servo6 = 0x1C,
-        Servo7 = 0x20,
-        Servo8 = 0x24,
-        Servo9 = 0x28,
-        Servo10 = 0x2C,
-        Servo11 = 0x30,
-        Servo12 = 0x34,
-        Servo13 = 0x38,
-        Servo14 = 0x3C,
-        Servo15 = 0x40,
-        Servo16 = 0x44,
+        SV1 = 0x08,
+        SV2 = 0x0C,
+        SV3 = 0x10,
+        S4 = 0x14,
+        S5 = 0x18,
+        S6 = 0x1C,
+        S7 = 0x20,
+        S8 = 0x24,
+        S9 = 0x28,
+        SV10 = 0x2C,
+        SV11 = 0x30,
+        SV12 = 0x34,
+        SV13 = 0x38,
+        SV14 = 0x3C,
+        SV15 = 0x40,
+        SV16 = 0x44,
     }
 
     export enum BoardAddresses {
@@ -114,18 +115,30 @@ namespace THK {
         initalised = true
     }
 
+    //% blockId=keisuu
+    //% block="動作倍率の初期設定 %keisuu"
+    //% keisuu=80
+    /**
+ * TODO: describe your function here
+ * @param keisuu describe parameter here, eg: 80
+ */
+    export function KeisuuSetting(keisuu: number): void {
+        keisuu_setting = keisuu
+    }
 
     /**
          * sets the requested servo to the reguested angle.
          * if the PCA has not yet been initialised calls the initialisation routine
-         *
-         * @param Servo Which servo to set
-         * @param degrees the angle to set the servo to
-         */
-    //% blockId=thk
-    //% block="角度%servo|to%do"
-    //% degrees.min=0 degrees.max=180
 
+         */
+
+    //% blockId=Kitronik_servo
+    //% block="サーボ %Servo|を %degrees|度にする"
+    //% degrees.min=0 degrees.max=180
+    /**
+ * TODO: describe your function here
+ * @param degrees describe parameter here, eg: 90
+ */
     export function サーボモータ(Servo: Servos, degrees: number): void {
         if (initalised == false) {
             secretIncantation()
@@ -135,7 +148,7 @@ namespace THK {
         }
         let buf = pins.createBuffer(2)
         let HighByte = false
-        let deg100 = degrees * 80 //元は100
+        let deg100 = degrees * keisuu_setting //元は100
         let PWMVal100 = deg100 * ServoMultiplier
         let PWMVal = PWMVal100 / 10000
 
@@ -157,6 +170,6 @@ namespace THK {
         }
         pins.i2cWriteBuffer(ChipAddress, buf, false)
     }
-
+    
 
 }
