@@ -116,7 +116,7 @@ namespace THK {
     }
 
     //% blockId=keisuu
-    //% block="動作倍率の初期設定 %keisuu"
+    //% block="サーボ動作倍率の初期設定 %keisuu"
     //% keisuu=80
     /**
  * TODO: describe your function here
@@ -132,9 +132,18 @@ namespace THK {
 
          */
 
+    //% blockId=teishi
+    //% block="一時停止 %mss"
+    /**
+     * @param mss how long to pause for, eg: 100, 200, 500, 1000, 2000
+     */
+    export function pause(mss: number): void {
+        basic.pause(mss);
+    }
+    
     //% blockId=Kitronik_servo
     //% block="サーボ %Servo|を %degrees|度にする"
-    //% degrees.min=0 degrees.max=180
+    //% degrees.min=-90 degrees.max=90
     /**
  * TODO: describe your function here
  * @param degrees describe parameter here, eg: 90
