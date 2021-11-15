@@ -25,12 +25,12 @@ namespace THK {
         SV1 = 0x08,
         SV2 = 0x0C,
         SV3 = 0x10,
-        S4 = 0x14,
-        S5 = 0x18,
-        S6 = 0x1C,
-        S7 = 0x20,
-        S8 = 0x24,
-        S9 = 0x28,
+        SV4 = 0x14,
+        SV5 = 0x18,
+        SV6 = 0x1C,
+        SV7 = 0x20,
+        SV8 = 0x24,
+        SV9 = 0x28,
         SV10 = 0x2C,
         SV11 = 0x30,
         SV12 = 0x34,
@@ -132,13 +132,14 @@ namespace THK {
 
          */
 
-    //% blockId=teishi
-    //% block="一時停止 %mss"
-    /**
-     * @param mss how long to pause for, eg: 100, 200, 500, 1000, 2000
-     */
-    export function pause(mss: number): void {
-        basic.pause(mss);
+
+    //% help=basic/pause weight=54
+    //% async block="pause (ms) %pause" blockGap=16
+    //% blockId=device_pause icon="\uf110"
+    //% pause.shadow=timePicker
+
+    export function pause(ms: number): void {
+        basic.pause(ms);
     }
     
     //% blockId=Kitronik_servo
